@@ -33,9 +33,16 @@ def index():
 def add_task():
     task = request.form.get("task")
 
-    tasks.append(task)
+    if task and task.strip() != "":
+        tasks.append(task)
+        return redirect("/")
 
-    return redirect("/")
+    return """
+    <script>
+        alert('Task cannot be empty!');
+        window.location.href = '/';
+    </script>
+    """
 
 @app.route("/delete/<int:index>")
 def delete_task(index):
